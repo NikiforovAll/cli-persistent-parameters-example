@@ -1,6 +1,8 @@
 # CliStore
 
-The goal is to demonstrate how to implement persistent parameters what *Azure CLI* and *AWS CLI* do.
+The goal is to demonstrate how to implement persistent parameters. Kinda what *Azure CLI* and *AWS CLI* do to improve developer experience.
+
+For example, Azure CLI offers persisted parameters that enable you to store parameter values for continued use.
 
 ```bash
 # oleksii_nikiforov in ~/projects
