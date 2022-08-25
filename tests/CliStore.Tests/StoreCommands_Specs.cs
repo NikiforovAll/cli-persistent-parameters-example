@@ -90,9 +90,14 @@ public class StoreCommands_Specs
         return result;
     }
 
-    private static void EnsureDeletedConfigFolder() =>
-        File.Delete(
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+    private static void EnsureDeletedConfigFolder()
+    {
+        var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
             ".clistore",
-            "config"));
+            "config");
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
 }
