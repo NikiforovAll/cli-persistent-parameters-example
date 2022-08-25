@@ -1,6 +1,6 @@
-# CliStore [![build](https://github.com/NikiforovAll/cli-persistent-parameters-example/actions/workflows/test-dotnet.yml/badge.svg)](https://github.com/NikiforovAll/cli-persistent-parameters-example/actions/workflows/test-dotnet.yml)
+# Persisted parameters in CLI applications  [![build](https://github.com/NikiforovAll/cli-persistent-parameters-example/actions/workflows/test-dotnet.yml/badge.svg)](https://github.com/NikiforovAll/cli-persistent-parameters-example/actions/workflows/test-dotnet.yml)
 
-The goal is to demonstrate how to implement persistent parameters. Kinda what *Azure CLI* and *AWS CLI* do to improve developer experience.
+The goal is to demonstrate how to implement persisted parameters. Kinda what *Azure CLI* and *AWS CLI* do to improve developer experience.
 
 For example, Azure CLI offers persisted parameters that enable you to store parameter values for continued use.
 
