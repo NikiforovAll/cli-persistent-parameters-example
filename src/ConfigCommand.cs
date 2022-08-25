@@ -99,7 +99,7 @@ the corresponding configuration is shown.");
 
     private static Command BuildUnsetCommand(CliConfigurationProvider configurationProvider)
     {
-
+        // TODO: unset section?
         var unset = new Command("unset", "Unset a configuration");
 
         var unsetpath = new Argument<string[]>(
@@ -147,7 +147,7 @@ public class CliConfigurationProvider : BinderBase<IConfiguration>
     protected override IConfiguration GetBoundValue(
         BindingContext bindingContext) => GetConfiguration();
 
-    private IConfiguration GetConfiguration()
+    public IConfiguration GetConfiguration()
     {
         var configuration = new ConfigurationBuilder()
             .AddEnvironmentVariables(StoreName.ToUpperInvariant())

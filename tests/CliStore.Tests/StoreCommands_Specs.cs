@@ -14,6 +14,7 @@ public class StoreCommands_Specs
     [Fact]
     public async Task Help_text_is_displayed_for_root_command()
     {
+        EnsureDeletedConfigFolder();
         ExecuteCLI(new string[] { "--help" }, out var stdOutBuffer, out _);
 
         await Verify(stdOutBuffer.ToString());

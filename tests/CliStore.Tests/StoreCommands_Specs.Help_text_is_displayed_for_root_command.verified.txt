@@ -5,8 +5,9 @@ Usage:
   clistore [command] [options]
 
 Options:
-  --version       Show version information
-  -?, -h, --help  Show help and usage information
+  target <target>  [default: <blank>]
+  --version        Show version information
+  -?, -h, --help   Show help and usage information
 
 Commands:
   config  Manage CLI configuration
