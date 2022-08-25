@@ -1,0 +1,13 @@
+﻿Description:
+  Shows proof of concept of how to store persistent configuration in a CLI apps
+
+Usage:
+  clistore [command] [options]
+
+Options:
+  --version       Show version information
+  -?, -h, --help  Show help and usage information
+
+Commands:
+  config  Manage CLI configuration
+

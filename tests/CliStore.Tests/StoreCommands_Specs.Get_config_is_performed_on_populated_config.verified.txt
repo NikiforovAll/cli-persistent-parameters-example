@@ -1,0 +1,18 @@
+﻿{
+  "core": [
+    {
+      "name": "is_populated",
+      "value": "true"
+    },
+    {
+      "name": "target",
+      "value": "my_value"
+    }
+  ],
+  "extra": [
+    {
+      "name": "another_section",
+      "value": "false"
+    }
+  ]
+}

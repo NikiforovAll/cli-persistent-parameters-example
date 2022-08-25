@@ -1,0 +1,14 @@
+﻿Description:
+  Manage CLI configuration
+
+Usage:
+  clistore config [command] [options]
+
+Options:
+  -?, -h, --help  Show help and usage information
+
+Commands:
+  get <key>    Get a configuration []
+  set <key>    Set a configuration
+  unset <key>  Unset a configuration
+

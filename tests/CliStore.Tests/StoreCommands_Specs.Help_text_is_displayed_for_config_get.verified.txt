@@ -1,0 +1,17 @@
+﻿Description:
+  Get a configuration
+
+Usage:
+  clistore config get [<key>] [options]
+
+Arguments:
+  <key>  The configuration to get. If not provided, all sections and configurations
+         will be listed. If `section` is provided, all configurations under the
+         specified section will be listed. If `<section>.<key>` is provided, only
+         the corresponding configuration is shown. []
+
+Options:
+  -?, -h, --help  Show help and usage information
+
+
+
