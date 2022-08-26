@@ -1,23 +1,26 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
+
+using CliStore;
+using static CliStore.ConfigCommandsFactory;
 
 var root = new RootCommand(
     "Shows proof of concept of how to store persistent configuration in a CLI apps");
 root.Name = "clistore";
 
+var commandLineBuilder = new CommandLineBuilder(root);
+
 root.AddConfigCommands(out var configProvider);
 
-var globalOption = new Option<string>("target", getDefaultValue: () =>
-{
-    // note, this is evaluate preemptively which may slow down autocompletion
-    var configuration = configProvider.GetConfiguration();
-    return configuration["core:target"] ?? "<blank>";
-});
-root.AddOption(globalOption);
-// root.AddGlobalOption(globalOption);
+root.AddCommand(GreetFromConfigCommand(configProvider));
+root.AddCommand(GreetFromDefaultValueCommand(configProvider));
+root.AddCommand(GreetFromPersistedCommand(configProvider));
 
-root.SetHandler((string target) =>
-{
-    Console.WriteLine($"Hello, {target}");
-}, globalOption);
+commandLineBuilder
+    .AddPersistedParametersMiddleware(configProvider)
+    .UseDefaults();
 
-await root.InvokeAsync(args);
+var parser = commandLineBuilder.Build();
+
+await parser.InvokeAsync(args);

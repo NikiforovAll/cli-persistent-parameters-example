@@ -5,10 +5,12 @@ Usage:
   clistore [command] [options]
 
 Options:
-  target <target>  [default: <blank>]
-  --version        Show version information
-  -?, -h, --help   Show help and usage information
+  --version       Show version information
+  -?, -h, --help  Show help and usage information
 
 Commands:
-  config  Manage CLI configuration
+  config                    Manage CLI configuration
+  greet-from-config         Demonstrates how to use IConfiguration from DI container
+  greet-from-default-value  Demonstrates how to provide default value to an option
+  greet-from-persisted      Demonstrates how to use persisted parameters
 

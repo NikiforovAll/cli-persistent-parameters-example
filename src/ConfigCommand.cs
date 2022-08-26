@@ -1,11 +1,13 @@
 using System.CommandLine.Binding;
+using System.CommandLine.Parsing;
+using System.ComponentModel;
 using System.Text.Json;
 
 using Microsoft.Extensions.Configuration;
 
 namespace System.CommandLine;
 
-public static class ConfigCommand
+public static class ConfigCommands
 {
     public static RootCommand AddConfigCommands(
         this RootCommand root,
@@ -69,17 +71,9 @@ the corresponding configuration is shown.");
             "Space-separated configurations in the form of <section>.<key>=<value>.");
         set.AddArgument(setpath);
 
-
         set.SetHandler((string[] path, IConfiguration configuration) =>
         {
-            var ini = new IniFile();
-
-            Directory.CreateDirectory(configurationProvider.ConfigLocationDir);
-
-            if (File.Exists(configurationProvider.ConfigLocation))
-            {
-                ini.Load(configurationProvider.ConfigLocation);
-            }
+            var ini = configurationProvider.LoadIniFile();
 
             foreach (var p in path)
             {
@@ -109,12 +103,7 @@ the corresponding configuration is shown.");
 
         unset.SetHandler((string[] path, IConfiguration configuration) =>
         {
-            var ini = new IniFile();
-
-            if (File.Exists(configurationProvider.ConfigLocation))
-            {
-                ini.Load(configurationProvider.ConfigLocation);
-            }
+            var ini = configurationProvider.LoadIniFile();
 
             foreach (var p in path)
             {
@@ -133,6 +122,10 @@ the corresponding configuration is shown.");
 
 public class CliConfigurationProvider : BinderBase<IConfiguration>
 {
+    public const string PersistedParamsSection = "persisted_params";
+
+    public IEnumerable<Option> PersistedOptions => persistedOptions.AsEnumerable();
+    private IList<Option> persistedOptions = new List<Option>();
     public static CliConfigurationProvider Create(string storeName = "clistore") =>
         new(storeName);
 
@@ -153,6 +146,51 @@ public class CliConfigurationProvider : BinderBase<IConfiguration>
             .AddEnvironmentVariables(StoreName.ToUpperInvariant())
             .AddIniFile(ConfigLocation, optional: true)
             .Build();
+
         return configuration;
     }
+
+    public void RegisterPersistedOption(Option option) => persistedOptions.Add(option);
+
+    public IniFile LoadIniFile()
+    {
+        var ini = new IniFile();
+
+        Directory.CreateDirectory(ConfigLocationDir);
+
+        if (File.Exists(ConfigLocation))
+        {
+            ini.Load(ConfigLocation);
+        }
+
+        return ini;
+    }
 }
+
+public class PersistedOptionProvider<T> : BinderBase<T?>
+{
+    public PersistedOptionProvider(Option<T> option, CliConfigurationProvider configProvider)
+    {
+        _option = option;
+        _configProvider = configProvider;
+    }
+
+    protected override T? GetBoundValue(BindingContext bindingContext)
+    {
+        if (!bindingContext.ParseResult.HasOption(_option))
+        {
+            var ini = _configProvider.LoadIniFile();
+            string text = ini[CliConfigurationProvider.PersistedParamsSection][_option.Name].ToString();
+            var value = (T)TypeDescriptor.GetConverter(typeof(T))
+                .ConvertFromString(text)!;
+
+            return value;
+        }
+
+        return bindingContext.ParseResult.GetValueForOption(_option);
+    }
+
+    private readonly Option<T> _option;
+    private readonly CliConfigurationProvider _configProvider;
+}
+
