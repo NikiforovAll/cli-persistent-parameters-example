@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CliStore;
 
-public static class ConfigCommandsFactory
+public static class GreetCommandsFactory
 {
     static void Greet(string target) => Console.WriteLine($"Hello, {target}");
 
@@ -41,7 +41,6 @@ public static class ConfigCommandsFactory
         var targetOption = new Option<string>("--target");
         targetOption.IsRequired = false;
         command.AddOption(targetOption);
-        configProvider.RegisterPersistedOption(targetOption);
         command.SetHandler(
             (string? target) => Greet(target!),
             new PersistedOptionProvider<string>(targetOption, configProvider));

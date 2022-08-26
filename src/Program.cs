@@ -3,7 +3,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 
 using CliStore;
-using static CliStore.ConfigCommandsFactory;
+using static CliStore.GreetCommandsFactory;
 
 var root = new RootCommand(
     "Shows proof of concept of how to store persistent configuration in a CLI apps");

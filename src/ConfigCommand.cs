@@ -173,6 +173,7 @@ public class PersistedOptionProvider<T> : BinderBase<T?>
     {
         _option = option;
         _configProvider = configProvider;
+        configProvider.RegisterPersistedOption(option);
     }
 
     protected override T? GetBoundValue(BindingContext bindingContext)

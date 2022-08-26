@@ -6,6 +6,9 @@ namespace CliStore;
 
 public static class CommandLineBuilderExtensions
 {
+    ///<summary>
+    /// Stores provided options registered with CliConfigurationProvider.RegisterPersistedOption
+    ///</summary>
     public static CommandLineBuilder AddPersistedParametersMiddleware(
         this CommandLineBuilder builder, CliConfigurationProvider configProvider)
     {
